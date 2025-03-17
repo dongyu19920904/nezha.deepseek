@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek从入门到精通 - 哪吒教程 | yuyu出品</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/css">
+        /* Custom styles */
+        .code-block {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .code-block pre {
+            overflow-x: auto;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .code-block:hover .copy-button {
+            opacity: 1;
+        }
+        
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Card hover effects */
+        .template-card {
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Fade in animation for content sections */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header with navigation -->
+    <header class="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">DeepSeek</span>
+                <span class="text-sm bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded-md">哪吒教程</span>
+                <span class="text-sm bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded-md">yuyu出品</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-sun text-yellow-500 dark:hidden"></i>
+                    <i class="fas fa-moon text-blue-300 hidden dark:block"></i>
+                </button>
+                <a href="#toc" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                    <i class="fas fa-list-ul mr-1"></i> 目录
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero section -->
+    <section class="bg-gradient-to-br from-primary-500 to-primary-700 dark:from-primary-700 dark:to-primary-900 text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center fade-in">
+                <h1 class="text-3xl md:text-5xl font-bold mb-6">DeepSeek从入门到精通</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8">太乙真人亲传版 · 哪吒特训营</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#contact" class="bg-white text-primary-700 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition transform hover:scale-105">
+                        <i class="fab fa-weixin mr-2"></i>添加微信：prompt2333
+                    </a>
+                    <a href="https://aivora.cn" target="_blank" class="bg-primary-800 bg-opacity-30 hover:bg-opacity-40 border border-white border-opacity-30 px-6 py-3 rounded-lg font-medium transition transform hover:scale-105">
+                        <i class="fas fa-shopping-cart mr-2"></i>访问商城
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section id="toc" class="py-12 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">目录</h2>
+            <div class="grid md:grid-cols-2 gap-6 fade-in">
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-fire text-orange-500 mr-2"></i>提示词模板
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#three-fire" class="text-primary-600 dark:text-primary-400 hover:underline">🔥 三昧真火提示词模板</a></li>
+                        <li><a href="#customer-profile" class="text-primary-600 dark:text-primary-400 hover:underline">👥 顾客画像与传播方案</a></li>
+                        <li><a href="#event-plan" class="text-primary-600 dark:text-primary-400 hover:underline">📅 活动执行计划书</a></li>
+                        <li><a href="#value-proposition" class="text-primary-600 dark:text-primary-400 hover:underline">💎 价值主张设计</a></li>
+                        <li><a href="#brand-plan" class="text-primary-600 dark:text-primary-400 hover:underline">⚡ 品牌发展规划</a></li>
+                        <li><a href="#annual-summary" class="text-primary-600 dark:text-primary-400 hover:underline">📱 小店年度总结</a></li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-magic text-purple-500 mr-2"></i>框架方法
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#wechat-article" class="text-primary-600 dark:text-primary-400 hover:underline">📝 公众号文章结构设计</a></li>
+                        <li><a href="#weibo-content" class="text-primary-600 dark:text-primary-400 hover:underline">📝 微博内容创作</a></li>
+                        <li><a href="#xiaohongshu-persona" class="text-primary-600 dark:text-primary-400 hover:underline">🧠 小红书人设打造</a></li>
+                        <li><a href="#douyin-opening" class="text-primary-600 dark:text-primary-400 hover:underline">🎬 抖音开场设计</a></li>
+                        <li><a href="#taste-framework" class="text-primary-600 dark:text-primary-400 hover:underline">🍲 火锅点餐法（TASTE框架）</a></li>
+                        <li><a href="#align-framework" class="text-primary-600 dark:text-primary-400 hover:underline">👟 球鞋购买法（ALIGN框架）</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Templates Section -->
+        <section id="templates" class="mb-16 fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-fire text-2xl text-orange-500"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold">提示词模板</h2>
+            </div>
+            
+            <div class="space-y-12">
+                <!-- Three Fire Template -->
+                <div id="three-fire" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🔥</span> 三昧真火提示词模板
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">（混天绫卷出三根金签）</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">签1：信息穿串模板</h4>
+                                <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                                    <pre class="text-sm text-gray-800 dark:text-gray-200">帮我的[手机/奶茶店/新衣服]写卖点：
+1. 先找出3个最牛的特点（像找烤翅最嫩的部位）
+2. 用小学生都懂的话说（比如'充电快得像窜天猴'）
+3. 加个对比参照物（'屏幕比脸盆还大'）</pre>
+                                    <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                                </div>
+                                
+                                <div class="mt-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【示例】帮我的智能手机写卖点：</p>
+                                    <ol class="list-decimal list-inside text-gray-600 dark:text-gray-400 text-sm space-y-1">
+                                        <li>充电5分钟刷剧2小时（像给手机灌了红牛）</li>
+                                        <li>拍照自带美颜不用P（比相亲照还真实）</li>
+                                        <li>摔地上三次都不碎（比鸡蛋壳结实）</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-2">签2：情感点火模板</h4>
+                                <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                                    <pre class="text-sm text-gray-800 dark:text-gray-200">帮我的[电动车/棉被/书包]写走心文案：
+1. 找使用者最常待的地方（工地/学校/夜市）
+2. 写三种感官体验（闻到的/听到的/摸到的）
+3. 联系TA最在意的人（孩子/父母/对象）</pre>
+                                    <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                                </div>
+                                
+                                <div class="mt-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【示例】帮我的保暖内衣写文案：</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm">"凌晨送外卖时（👃闻见路边摊的葱花香）<br>
+                                    （👂听见手机接单的叮咚声）<br>
+                                    （✋摸着冻僵的膝盖）<br>
+                                    想起媳妇织的毛裤还没舍得穿..."</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-2">签3：行动召唤模板</h4>
+                                <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                                    <pre class="text-sm text-gray-800 dark:text-gray-200">帮我的[早餐店/理发店/水果摊]搞促销：
+1. 设个倒计时优惠（前XX名送卤蛋）
+2. 操作要比划拳还简单（扫码就行）
+3. 吓唬人会错过好事（像错过末班车）</pre>
+                                    <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Customer Profile Template -->
+                <div id="customer-profile" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">👥</span> 顾客画像与传播方案（三眼锁定法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我为[产品/服务]设计一个精准的顾客画像和传播方案，要求：
+
+1. 顾客画像：
+   - 画出3种典型顾客的详细形象
+   - 每种顾客都要包括：年龄、职业、收入、兴趣爱好、消费习惯
+   - 给每种顾客起个生活化的昵称（比如"夜宵王小明"）
+
+2. 传播渠道：
+   - 针对每种顾客，设计最适合的3个宣传渠道
+   - 说明为什么这些渠道最适合他们
+   - 每个渠道的具体投放时间和频率
+
+3. 互动彩蛋：
+   - 设计3个能让顾客主动参与的小活动
+   - 每个活动都要简单易懂，一看就会
+   - 说明参与后能得到什么奖励
+
+4. 效果预估：
+   - 预计每种顾客的转化率大概是多少
+   - 哪种顾客最值得重点投入</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我为"手工皮具店"设计一个精准的顾客画像和传播方案</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含顾客画像、传播渠道、互动彩蛋和效果预估四个部分，针对手工皮具店的目标客户群体进行精准定位和营销策略设计。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Plan Template -->
+                <div id="event-plan" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">📅</span> 活动执行计划书（渡劫清单法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我为[活动名称]制定一个详细的执行计划，要求：
+
+1. 时间表（倒推法）：
+   - 活动当天是[日期]
+   - 从现在到活动当天，每周需要完成什么任务
+   - 重点标出3个最关键的时间节点
+
+2. 人员分工表：
+   - 列出活动需要的所有角色（至少5个）
+   - 每个角色负责什么具体任务
+   - 谁来监督检查每个任务的完成情况
+
+3. 应急预案：
+   - 列出可能出现的5个突发问题
+   - 每个问题的解决方案
+   - 谁负责处理这些突发情况
+
+4. 物资清单：
+   - 活动需要准备的所有物品
+   - 每种物品的数量和预算
+   - 采购时间和负责人
+
+5. 成功标准：
+   - 如何判断这个活动是否成功
+   - 设定3个可量化的目标</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我为"社区亲子烘焙大赛"制定一个详细的执行计划</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含时间表、人员分工表、应急预案、物资清单和成功标准五个部分，为社区亲子烘焙大赛提供全面的活动执行规划。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Value Proposition Template -->
+                <div id="value-proposition" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">💎</span> 价值主张设计（三重境界法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我为[产品/服务]设计一个有力的价值主张，要求：
+
+1. 功能价值（实际好处）：
+   - 列出[产品/服务]能解决的3个具体问题
+   - 每个问题的解决方案要具体明确（比如"1分钟内完成"而不是"快速完成"）
+   - 用数字或具体事实说明效果（比如"省30%时间"而不是"省很多时间"）
+
+2. 情感价值（感受体验）：
+   - 描述使用[产品/服务]后的情感体验
+   - 这种体验如何与顾客的生活产生共鸣
+   - 用一个生活中的比喻来形容这种感受
+
+3. 差异化价值（与众不同）：
+   - 与市场上3个主要竞争对手相比有什么不同
+   - 为什么顾客应该选择我而不是竞争对手
+   - 这种差异对顾客的实际意义
+
+4. 价值表达方式：
+   - 设计3个简短有力的价值宣言
+   - 每个宣言都要具体而非空泛
+   - 避免使用行业术语，用普通人能理解的语言</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我为"老奶奶手工编织围巾"设计一个有力的价值主张</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含功能价值、情感价值、差异化价值和价值表达方式四个部分，为老奶奶手工编织围巾打造独特的市场定位和价值主张。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brand Development Plan -->
+                <div id="brand-plan" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">⚡</span> 品牌发展规划（混天绫展宏图）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我为[品牌/店铺]制定一个5年发展规划，要求：
+
+1. 分阶段目标设定：
+   - 第1年：设定3个具体可衡量的目标
+   - 第3年：设定3个中期发展目标
+   - 第5年：设定3个长期愿景目标
+   - 每个目标都要有具体数字或明确标准
+
+2. 实现路径规划：
+   - 每个阶段需要做哪些具体工作
+   - 需要投入哪些资源（人力/资金/技术）
+   - 可能遇到的主要障碍和解决方案
+
+3. 品牌升级计划：
+   - 产品/服务如何逐步升级
+   - 目标客户群如何扩展
+   - 品牌形象如何提升
+
+4. 避免的陷阱：
+   - 如何避免"画大饼"不落地
+   - 如何确保每个阶段目标可执行
+   - 如何设定合理的期望值</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我为"小明水果店"制定一个5年发展规划</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含分阶段目标设定、实现路径规划、品牌升级计划和避免的陷阱四个部分，为小明水果店规划长期可持续发展路径。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Annual Summary Template -->
+                <div id="annual-summary" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">📱</span> 小店年度总结（风火轮法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我写一份[小店/摊位]的年度经营总结，要求：
+
+1. 销售业绩回顾：
+   - 用"数钱法"列出今年最畅销的3种产品/服务及其销售数据
+   - 用"说书法"讲述一次成功的促销活动或解决顾客难题的故事
+   - 用"证据法"提供3个证明店铺进步的数据（比如客流量增长、好评率等）
+
+2. 店铺发展亮点：
+   - 我们团队完成的2-3项改进（比如装修、新品开发等）
+   - 我们创新的1-2个经营方法或服务流程
+   - 我们获得的1-2个认可或荣誉（比如社区推荐、平台好评等）
+
+3. 来年经营规划：
+   - 短期目标（1-3个月）：列出2-3个具体可执行的改进计划
+   - 中期目标（半年）：列出2-3个店铺升级计划
+   - 长期目标（一年）：描述店铺的愿景和发展方向
+
+4. 感谢与展望：
+   - 感谢2-3类关键支持者（比如老顾客、合作伙伴等）
+   - 对未来的期许和承诺
+   - 一句温暖有力的结束语</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我写一份"老王烧烤摊"的年度经营总结</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含销售业绩回顾、店铺发展亮点、来年经营规划和感谢与展望四个部分，全面总结老王烧烤摊一年来的经营成果和未来规划。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Frameworks Section -->
+        <section id="frameworks" class="mb-16 fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-magic text-2xl text-purple-500"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold">框架方法</h2>
+            </div>
+            
+            <div class="space-y-12">
+                <!-- WeChat Article Framework -->
+                <div id="wechat-article" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">📝</span> 公众号文章结构设计（乾坤圈法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我设计一篇关于[主题]的公众号文章结构，要求：
+
+1. 标题设计（3选1）：
+   - 设计3个不同类型的标题：
+     * 问题型标题（引发思考）
+     * 数字型标题（提供明确价值）
+     * 故事型标题（激发好奇心）
+
+2. 开篇设计（钩子）：
+   - 设计3种不同的开场方式：
+     * 提出读者痛点
+     * 讲述一个简短故事
+     * 抛出一个有争议的观点
+
+3. 内容框架（主体）：
+   - 设计一个清晰的内容结构，包括：
+     * 3-5个主要部分
+     * 每部分的小标题
+     * 每部分应该包含的要点
+     * 在哪些部分插入案例或数据
+
+4. 结尾设计（收尾）：
+   - 设计2种不同的结尾方式：
+     * 总结型结尾（强化主要观点）
+     * 行动型结尾（鼓励读者采取行动）
+
+5. 互动设计：
+   - 在文章中设置2-3个互动点，如：
+     * 提问引导评论
+     * 投票或选择题
+     * 邀请分享经验</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我设计一篇关于"如何培养孩子的阅读习惯"的公众号文章结构</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含标题设计、开篇设计、内容框架、结尾设计和互动设计五个部分，为公众号文章提供完整的结构规划。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weibo Content Framework -->
+                <div id="weibo-content" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">📝</span> 微博内容创作（火尖枪法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我创作一条关于[主题]的微博内容，要求：
+
+1. 内容结构（三段式）：
+   - 开头：用一句话抓住读者注意力
+   - 中间：用2-3个简短段落展开主题
+   - 结尾：用一句话总结或引发思考
+
+2. 表达风格（选择一种）：
+   - 幽默调侃型
+   - 干货分享型
+   - 情感共鸣型
+   - 观点评论型
+
+3. 互动元素（至少包含2个）：
+   - 设计一个简短有趣的话题标签
+   - 加入1-2个与内容相关的表情
+   - 设计一个引发评论的问题
+   - 添加一个投票或二选一问题
+
+4. 视觉元素建议：
+   - 描述应该配什么类型的图片
+   - 如果需要，提供简单的图片文字说明
+
+5. 转发策略：
+   - 设计一句鼓励转发的话
+   - 提供1-2个转发理由</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我创作一条关于"夏日防晒小技巧"的微博内容</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含内容结构、表达风格、互动元素、视觉元素建议和转发策略五个部分，为微博内容提供全面的创作指导。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Xiaohongshu Persona Framework -->
+                <div id="xiaohongshu-persona" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🧠</span> 小红书人设打造（混天绫法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我设计一个[领域]的小红书博主人设，要求：
+
+1. 人设基础（形象定位）：
+   - 设计一个独特的人设名称（比如"都市野餐规划师"而非简单的"美食博主"）
+   - 3-5个关键人设标签（比如"85后、理工男、烘焙达人、猫奴、露营爱好者"）
+   - 一句简短有力的个人简介
+   - 头像和背景图的风格建议
+
+2. 内容规划（内容矩阵）：
+   - 设计3-5个内容主题方向
+   - 每个主题下的3个具体选题示例
+   - 建议的更新频率
+   - 内容风格和语言特点
+
+3. 互动策略（社区运营）：
+   - 如何回复粉丝评论的风格和原则
+   - 3个能引发高互动的提问或话题
+   - 如何与其他博主互动和联动
+   - 如何处理负面评论
+
+4. 差异化亮点（脱颖而出）：
+   - 与同领域博主的3个主要区别
+   - 能体现专业性的2-3个细节
+   - 能增加亲和力的2-3个设定</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我设计一个"家居收纳"的小红书博主人设</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含人设基础、内容规划、互动策略和差异化亮点四个部分，为小红书博主打造独特且有吸引力的人设形象。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Douyin Opening Framework -->
+                <div id="douyin-opening" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🎬</span> 抖音开场设计（风火轮法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">帮我设计一个[主题]的抖音视频开场，要求：
+
+1. 开场钩子（3秒吸引力）：
+   - 设计3种不同类型的开场白：
+     * 悬念型（制造好奇）
+     * 冲突型（设置矛盾）
+     * 福利型（直接给价值）
+   - 每种开场白不超过15个字
+   - 语气要口语化，像跟朋友聊天
+
+2. 画面设计（视觉冲击）：
+   - 第一个镜头应该展示什么
+   - 有什么视觉效果或道具
+   - 表情和肢体动作建议
+
+3. 节奏设计（韵律感）：
+   - 开场语速应该快还是慢
+   - 在哪个词需要停顿或强调
+   - 配乐或音效建议
+
+4. 过渡设计（承上启下）：
+   - 如何从开场自然过渡到主体内容
+   - 一句承接的过渡语
+   - 过渡时的画面变化建议</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】帮我设计一个"厨房小技巧"的抖音视频开场</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">包含开场钩子、画面设计、节奏设计和过渡设计四个部分，为抖音视频提供吸引人的开场方案。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TASTE Framework -->
+                <div id="taste-framework" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🍲</span> 火锅点餐法（TASTE框架）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【TASTE框架】请帮我[任务描述]，使用火锅点餐法：
+
+T - Topic（主题）：
+   - 我需要解决的问题/完成的任务是[具体描述]
+   - 这个任务的背景是[背景信息]
+   - 最终目标是[期望结果]
+
+A - Audience（受众）：
+   - 这个内容/方案的目标受众是[受众描述]
+   - 他们的主要特点是[特点描述]
+   - 他们最关心的问题是[关注点]
+
+S - Style（风格）：
+   - 我希望采用的风格是[风格描述]，例如[举例]
+   - 语言应该[正式/轻松/专业/生活化]
+   - 应该避免[不希望的风格元素]
+
+T - Template（模板）：
+   - 内容结构应该包括[结构描述]
+   - 可以参考的成功案例是[案例]
+   - 特别需要强调的部分是[重点]
+
+E - Extra（额外要求）：
+   - 特别需要注意[特殊要求]
+   - 需要避免的雷区是[禁忌]
+   - 其他补充说明[补充]</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】请帮我写一篇关于"如何选择适合自己的健身方式"的文章，使用火锅点餐法</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">使用TASTE框架（Topic、Audience、Style、Template、Extra）来明确文章的主题、目标受众、风格、结构模板和额外要求，为健身方式选择文章提供清晰的创作指导。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ALIGN Framework -->
+                <div id="align-framework" class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">👟</span> 球鞋购买法（ALIGN框架）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【ALIGN框架】请帮我[任务描述]，使用球鞋购买法：
+
+A - Aim（目标）：
+   - 我的主要目标是[目标描述]
+   - 成功的标准是[成功标准]
+   - 这个任务的优先级是[优先级]
+
+L - Limitations（限制）：
+   - 我面临的主要限制是[限制描述]
+   - 可用的资源有[资源描述]
+   - 必须遵守的规则是[规则]
+
+I - Ideas（创意）：
+   - 我已经想到的方法是[已有想法]
+   - 希望探索的新方向是[新方向]
+   - 特别感兴趣的参考案例是[参考]
+
+G - Ground（基础）：
+   - 我已经掌握的相关知识/技能是[已有基础]
+   - 我的优势是[优势]
+   - 我需要补充学习的是[学习需求]
+
+N - Next Steps（下一步）：
+   - 完成这个任务后，我计划[后续计划]
+   - 希望这个任务能帮助我[长期目标]
+   - 我希望得到的具体建议是[具体需求]</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】请帮我制定一个"30天减肥计划"，使用球鞋购买法</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">使用ALIGN框架（Aim、Limitations、Ideas、Ground、Next Steps）来明确减肥目标、限制条件、创意方法、基础情况和后续计划，为30天减肥计划提供全面的规划指导。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Knowledge Awakening Section -->
+        <section id="knowledge-awakening" class="mb-16 fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-brain text-2xl text-green-500"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold">知识觉醒大法</h2>
+            </div>
+            
+            <div class="space-y-12">
+                <!-- Knowledge Classification Method -->
+                <div class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🔥</span> 知识分级法（辣翅分级）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【知识分级学习】请帮我学习[主题]，按照难度分级：
+
+1. 基础知识（微辣级）：
+   - 请用最简单的话解释[主题]的核心概念
+   - 只使用日常生活中的例子
+   - 避免任何专业术语，就像跟小学生解释一样
+   - 重点解释这3个最基础的概念：[列出3个核心概念]
+
+2. 进阶知识（中辣级）：
+   - 在理解基础概念后，请解释这些稍复杂的内容
+   - 可以使用一些简单的专业术语，但要立即解释
+   - 用类比帮助理解这些概念
+   - 重点解释这3个进阶概念：[列出3个进阶概念]
+
+3. 高级知识（变态辣级）：
+   - 只有在完全理解前两级后才学习
+   - 可以使用专业术语和框架
+   - 解释这些概念之间的复杂关系
+   - 重点解释这2个高级概念：[列出2个高级概念]
+
+请先从微辣级开始，我理解后再进入下一级。</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】学习"手机摄影"</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">按照微辣级（基础知识）、中辣级（进阶知识）和变态辣级（高级知识）三个难度等级，逐步学习手机摄影的核心概念、技巧和高级应用。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Knowledge Application Method -->
+                <div class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">🍗</span> 烧烤实操法（学习应用）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【知识烧烤实操】请帮我学习如何应用[知识/技能]，就像烤鸡翅一样分步骤：
+
+1. 火候控制（参数调整）：
+   - 请列出学习这个技能时需要注意的3-5个关键参数
+   - 每个参数的最佳"火候"是什么
+   - 如何根据不同情况调整这些参数
+   - 常见的"火候"掌握错误有哪些
+
+2. 翻面时机（换角度思考）：
+   - 当遇到[常见困难1]时，有什么替代方法
+   - 当遇到[常见困难2]时，如何换个角度解决
+   - 提供3个不同视角来理解这个知识点
+   - 什么情况下应该暂停并重新思考方向
+
+3. 秘制酱料（经验总结）：
+   - 请提供一个简单易记的"配方"来记住关键步骤
+   - 设计一个口诀或记忆法帮助记忆重点
+   - 分享3个提高效率的小技巧
+   - 如何把这个经验应用到其他相关领域
+
+请用生活化的语言和具体例子解释，避免抽象概念。</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】学习"做简易家常菜"</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">通过火候控制（参数调整）、翻面时机（换角度思考）和秘制酱料（经验总结）三个步骤，学习如何应用做简易家常菜的技能。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Knowledge Innovation Method -->
+                <div class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">⚡</span> 知识觉醒三连招（创新学习法）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【知识觉醒三连招】请帮我用创新方式学习[主题]：
+
+1. 回忆高光时刻（找到相似经验）：
+   - 请问我之前是否有过类似的学习经验：[描述你可能有的相关经验]
+   - 在那次经验中，我成功掌握了什么技能
+   - 当时是用了什么方法学会的
+   - 那次经验中最关键的突破点是什么
+
+2. 连接新招式（建立知识联系）：
+   - 请帮我找出[旧知识点]和[新知识点]之间的3个相似之处
+   - 解释如何把旧知识的学习方法应用到新知识上
+   - 设计一个练习，把两种知识结合起来
+   - 找出可能阻碍知识连接的"思维盲点"
+
+3. 创造必杀技（知识创新应用）：
+   - 基于前两步，创造一个独特的学习方法或记忆技巧
+   - 设计一个只有10分钟的"闪电学习"计划
+   - 提出一个创新的应用场景
+   - 给这个"必杀技"起个容易记住的名字
+
+请用生动有趣的语言回答，就像在教一个充满好奇心的孩子。</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】学习"英语口语"</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">通过回忆高光时刻（找到相似经验）、连接新招式（建立知识联系）和创造必杀技（知识创新应用）三个步骤，用创新方式学习英语口语。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Learning Plan Method -->
+                <div class="template-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-2">📝</span> 黑眼圈修炼手册（学习计划）
+                        </h3>
+                        
+                        <div class="code-block bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <pre class="text-sm text-gray-800 dark:text-gray-200">【黑眼圈修炼手册】请帮我制定学习[主题]的计划：
+
+1. 每日目标设定：
+   - 设计5个小而可行的每日学习任务
+   - 每个任务预计花费时间
+   - 完成标准是什么
+   - 如何检验学习效果
+
+2. 定期升级计划：
+   - 设计一个每周知识整理的方法
+   - 每月应该如何复习和巩固
+   - 什么时候可以进入下一个难度等级
+   - 如何判断是否真正掌握了知识
+
+3. 独门秘籍设计：
+   - 创建一个简单的知识点标记系统
+   - 设计一个进度追踪表
+   - 提供3个克服学习瓶颈的方法
+   - 设计一个奖励机制保持学习动力
+
+请把计划设计得像游戏闯关一样有趣，避免枯燥的学习方式。</pre>
+                            <button class="copy-button bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs">复制</button>
+                        </div>
+                        
+                        <div class="mt-6 bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <p class="font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">【实例】学习"基础编程"</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">通过每日目标设定、定期升级计划和独门秘籍设计三个部分，为基础编程学习制定一个游戏化的学习计划。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tips and Tricks Section -->
+        <section id="tips" class="mb-16 fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-lightbulb text-2xl text-yellow-500"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold">使用技巧</h2>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                <div class="p-6">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fas fa-star text-yellow-500 mr-2"></i>提示词优化技巧
+                            </h3>
+                            <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>具体胜于抽象</strong> - 使用具体的例子和数字，而不是模糊的描述</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>分步指导</strong> - 将复杂任务拆分为清晰的步骤，逐一引导AI完成</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>角色设定</strong> - 给AI设定一个特定角色，如"作为一名经验丰富的营销专家"</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span><strong>输出格式</strong> - 明确指定你希望的输出格式，如表格、列表或分段文本</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fas fa-exclamation-triangle text-orange-500 mr-2"></i>常见陷阱与解决方案
+                            </h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium mb-2">问题：回答太笼统</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">解决：要求提供具体例子和数据支持，指定"至少3个具体例子"</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium mb-2">问题：回答太专业难懂</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">解决：明确要求"用简单语言解释，像对10岁孩子讲解一样"</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium mb-2">问题：回答偏离主题</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">解决：使用结构化提示，明确每部分需要回答的具体问题</p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <p class="font-medium mb-2">问题：回答缺乏创意</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">解决：明确要求"提供3个创新的、非常规的解决方案"</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 flex items-center">
+                                <i class="fas fa-magic text-purple-500 mr-2"></i>进阶使用技巧
+                            </h3>
+                            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">多轮对话策略</h4>
+                                <ol class="list-decimal list-inside space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>第一轮：提出基本问题，获取初步回答</li>
+                                    <li>第二轮：针对初步回答提出深入问题</li>
+                                    <li>第三轮：要求AI整合前两轮内容，形成完整方案</li>
+                                    <li>第四轮：请求AI对方案进行自我评估和改进</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Call to Action -->
+    <section class="bg-gradient-to-br from-primary-500 to-primary-700 dark:from-primary-700 dark:to-primary-900 text-white py-12">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">开始你的DeepSeek之旅</h2>
+            <p class="text-lg opacity-90 mb-8">立即访问商城，获取更多AI资源</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://aivora.cn" target="_blank" class="bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition transform hover:scale-105 inline-flex items-center">
+                    <i class="fas fa-shopping-cart mr-2"></i>访问商城
+                </a>
+                <a href="#contact" class="bg-primary-800 bg-opacity-30 hover:bg-opacity-40 border border-white border-opacity-30 px-8 py-3 rounded-lg font-medium transition transform hover:scale-105 inline-flex items-center">
+                    <i class="fab fa-weixin mr-2"></i>联系我们
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-800 py-12">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold text-primary-600 dark:text-primary-400 mb-2">DeepSeek从入门到精通</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">太乙真人亲传版 · 哪吒特训营 | yuyu出品</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://aivora.cn" target="_blank" class="text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 md:mb-0">© 2024 DeepSeek教程站 | yuyu AI提示词专家. 保留所有权利。</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary-600 dark:bg-primary-700 text-white rounded-full p-3 shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary-700 dark:hover:bg-primary-600">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+        
+        // Copy Button Functionality
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.parentElement.querySelector('pre').textContent;
+                navigator.clipboard.writeText(codeBlock).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = '已复制!';
+                    button.classList.add('bg-green-200', 'dark:bg-green-800', 'text-green-800', 'dark:text-green-200');
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('bg-green-200', 'dark:bg-green-800', 'text-green-800', 'dark:text-green-200');
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Lazy Loading for Content Sections
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
